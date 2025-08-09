@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, query, orderBy, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import Link from 'next/link';
-import { personalityTypes } from './../../data/personalityTypes';
+import { exhibitionTypes } from './../../lib/exhibitionTypes';
 
 export default function PersonalityStatPage() {
   const [results, setResults] = useState([]);
@@ -29,7 +29,7 @@ export default function PersonalityStatPage() {
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          const personalityType = data.personalityType;
+          const personalityType = data.exhibitionTypes;
           
           // 성격 유형 카운트 증가
           if (personalityType) {
