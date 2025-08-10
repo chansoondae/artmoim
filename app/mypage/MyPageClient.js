@@ -111,9 +111,10 @@ const MyPageClient = () => {
   const allExhibitionTypes = getAllExhibitionTypes();
 
   const ProfileHeader = () => (
-    <div className="bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 rounded-3xl shadow-lg border border-gray-100/50 p-6 mb-8 backdrop-blur-sm">
+    <div className="p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-start mb-2"></div>
       {/* 프로필 이미지와 기본 정보 */}
-      <div className="flex items-start gap-4 mb-6">
+      <div className="flex items-start gap-6 mb-2">
         {/* 프로필 이미지 */}
         <div className="relative flex-shrink-0">
           <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full overflow-hidden ring-3 ring-white shadow-lg">
@@ -152,8 +153,9 @@ const MyPageClient = () => {
               <span>{currentProfile.joinDate} 가입</span>
             </div>
           </div>
-
-          <div className="flex gap-2">
+        </div>
+        {/* 버튼 */}
+        <div className="flex flex-col gap-4 items-end">
             <button className="flex items-center gap-1 px-3 py-1.5 bg-white/70 text-gray-700 rounded-lg hover:bg-white transition-all duration-200 shadow-sm text-xs font-medium">
               <Share className="w-3 h-3" />
               <span>공유</span>
@@ -162,22 +164,21 @@ const MyPageClient = () => {
               <Settings className="w-3 h-3" />
               <span>설정</span>
             </button>
-          </div>
         </div>
       </div>
 
       {/* 자기소개 */}
-      <p className="text-gray-600 mb-6 text-sm leading-relaxed">{currentProfile.bio}</p>
+      <p className="text-gray-600 mb-4 text-sm leading-relaxed">{currentProfile.bio}</p>
 
       {/* 통계 - 4개 항목 한 줄 */}
       <div className="grid grid-cols-4 gap-3">
         <div className="text-center p-3 bg-white/60 rounded-xl backdrop-blur-sm border border-gray-100/50">
           <div className="text-lg font-bold text-purple-600 mb-1">{currentProfile.totalMeetups}</div>
-          <div className="text-xs text-gray-600 font-medium">참여 모임</div>
+          <div className="text-xs text-gray-600 font-medium">참여수</div>
         </div>
         <div className="text-center p-3 bg-white/60 rounded-xl backdrop-blur-sm border border-gray-100/50">
           <div className="text-lg font-bold text-pink-600 mb-1">{currentProfile.totalExhibitions}</div>
-          <div className="text-xs text-gray-600 font-medium">관람 전시</div>
+          <div className="text-xs text-gray-600 font-medium">관람수</div>
         </div>
         <div className="text-center p-3 bg-white/60 rounded-xl backdrop-blur-sm border border-gray-100/50">
           <div className="text-lg font-bold text-blue-600 mb-1">{currentProfile.followers}</div>
@@ -192,23 +193,23 @@ const MyPageClient = () => {
   );
 
   const OverviewTab = () => (
-    <div className="space-y-8">
+    <div className="space-y-2">
       {/* 전시 관람 성향 */}
-      <div className="bg-white rounded-3xl shadow-lg border border-gray-100/50 p-8 relative overflow-hidden">
+      <div className=" p-4 relative overflow-hidden">
         {/* 헤더 */}
-        <div className="flex items-center justify-between mb-8 relative z-10">
+        <div className="flex items-center justify-between mb-2 relative z-2">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-purple-100 rounded-2xl">
               <Eye className="w-8 h-8 text-purple-500" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">전시 관람 성향</h2>
+            <h2 className="text-2xl font-bold text-gray-900">관람스타일</h2>
           </div>
           
           {/* 프라이버시 토글 */}
           <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-2">
-            <span className="text-sm text-gray-600 font-medium">
+            {/* <span className="text-sm text-gray-600 font-medium">
               {isExhibitionTypeVisible ? '공개' : '비공개'}
-            </span>
+            </span> */}
             <button
               onClick={toggleExhibitionTypeVisibility}
               className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
@@ -345,7 +346,7 @@ const MyPageClient = () => {
                 </div>
 
                 {/* 관람 스타일 */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-2xl">
                   <div className="flex items-center gap-3 mb-4">
                     <Eye className="w-6 h-6 text-blue-600" />
                     <h4 className="font-bold text-gray-900 text-lg">관람 스타일</h4>
@@ -480,8 +481,8 @@ const MyPageClient = () => {
             .map(([key, value]) => {
             const labels = {
               attendance: '참석률',
-              punctuality: '시간약속',
-              communication: '소통능력',
+              punctuality: '약속',
+              communication: '소통',
               consideration: '배려심'
             };
             const colors = {
@@ -533,14 +534,17 @@ const MyPageClient = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-gray-900 truncate mb-1">{meetup.title}</h4>
-                  <p className="text-sm text-gray-500">{meetup.date}</p>
-                </div>
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`w-5 h-5 ${i < meetup.rating ? 'fill-current' : ''}`} />
-                  ))}
+                {/* 모바일에서는 세로 배치, 데스크톱에서는 가로 배치 */}
+                <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 truncate mb-1">{meetup.title}</h4>
+                    <p className="text-sm text-gray-500">{meetup.date}</p>
+                  </div>
+                  <div className="flex text-yellow-400 sm:flex-shrink-0">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className={`w-5 h-5 ${i < meetup.rating ? 'fill-current' : ''}`} />
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -693,7 +697,7 @@ const MyPageClient = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50/30 via-white to-pink-50/30" onClick={() => setIsTypeDropdownOpen(false)}>
-      <div className="max-w-7xl mx-auto px-4 py-8" onClick={(e) => e.stopPropagation()}>
+      <div className="max-w-7xl mx-auto px-4 py-2" onClick={(e) => e.stopPropagation()}>
         {/* 프로필 헤더 */}
         <ProfileHeader />
 
