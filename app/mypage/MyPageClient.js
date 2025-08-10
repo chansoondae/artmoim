@@ -150,7 +150,7 @@ const MyPageClient = () => {
             </div>
             <div className="flex items-center gap-1 text-gray-600 text-sm">
               <Calendar className="w-3 h-3" />
-              <span>{currentProfile.joinDate} 가입</span>
+              <span>{currentProfile.joinDate}</span>
             </div>
           </div>
         </div>

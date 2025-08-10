@@ -16,6 +16,10 @@ const nextConfig = {
           hostname: '127.0.0.1',
         },
         {
+          protocol: 'https',
+          hostname: 'www.gungeum.co.kr',
+        },
+        {
             protocol: 'https',
             hostname: 'dbuuh2wfbpxcx.cloudfront.net',
             port: '',
