@@ -9,6 +9,7 @@ import Image from 'next/image';
 import NicknameModal from './../components/NicknameModal';
 import { db } from './../../lib/firebase';
 import { collection, addDoc, doc, getDoc, setDoc, runTransaction, increment } from 'firebase/firestore';
+import BottomNav from './../components/BottomNav';
 
 export default function PersonalityPageClient() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -189,59 +190,63 @@ export default function PersonalityPageClient() {
   const currentArtwork = artworks[currentQuestion];
 
   return (
-    <div className="min-h-screen py-2 px-4 max-w-5xl mx-auto">
-    <div className="mb-12 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-fuchsia-900">미술 작품으로 성격 테스트</h1>
-      
-      {/* 진행 상태 표시 */}
-      <div className={styles.progressContainer}>
-        <div 
-          className={styles.progressBar} 
-          style={{ width: `${progress}%` }}
-        ></div>
-      </div>
-      
-      <p className={styles.questionNumber}>
-        질문 {currentQuestion + 1}/{artworks.length}
-      </p>
-      <p className={styles.instruction}>
-        더 끌리는 작품을 선택해 주세요
-      </p>
-      
-      <div className={styles.optionsGrid}>
-        {currentArtwork.options.map((option, index) => (
+    <>
+      <div className="min-h-screen py-24 px-4 max-w-5xl mx-auto">
+      <div className="mb-12 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-fuchsia-900">미술 작품으로 성격 테스트</h1>
+        
+        {/* 진행 상태 표시 */}
+        <div className={styles.progressContainer}>
           <div 
-            key={option.id}
-            onClick={() => handleSelection(option.id)}
-            className={styles.optionCard}
-          >
-            <div className={styles.imageContainer}>
-            {option.image ? (
-              // When there's an image available
-              <Image
-                src={option.image}
-                alt={`${option.title} by ${option.artist}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className={styles.optionImage}
-                priority={index < 2} // Prioritize loading first few images
-              />
-            ) : (
-              // When there's no image available, show the placeholder
-              <div className={styles.imagePlaceholder}>
-                <p className={styles.artworkTitle}>{option.title}</p>
-                <p className={styles.artistName}>by {option.artist}</p>
+            className={styles.progressBar} 
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+        
+        <p className={styles.questionNumber}>
+          질문 {currentQuestion + 1}/{artworks.length}
+        </p>
+        <p className={styles.instruction}>
+          더 끌리는 작품을 선택해 주세요
+        </p>
+        
+        <div className={styles.optionsGrid}>
+          {currentArtwork.options.map((option, index) => (
+            <div 
+              key={option.id}
+              onClick={() => handleSelection(option.id)}
+              className={styles.optionCard}
+            >
+              <div className={styles.imageContainer}>
+              {option.image ? (
+                // When there's an image available
+                <Image
+                  src={option.image}
+                  alt={`${option.title} by ${option.artist}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className={styles.optionImage}
+                  priority={index < 2} // Prioritize loading first few images
+                />
+              ) : (
+                // When there's no image available, show the placeholder
+                <div className={styles.imagePlaceholder}>
+                  <p className={styles.artworkTitle}>{option.title}</p>
+                  <p className={styles.artistName}>by {option.artist}</p>
+                </div>
+              )}
               </div>
-            )}
+              <div className={styles.optionInfo}>
+                <h3 className={styles.artworkTitle}>{option.title}</h3>
+                <p className={styles.artistName}>{option.artist}</p>
+              </div>
             </div>
-            <div className={styles.optionInfo}>
-              <h3 className={styles.artworkTitle}>{option.title}</h3>
-              <p className={styles.artistName}>{option.artist}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    </div>
+      </div>
+      {/* Footer로 BottomNav 추가 */}
+      <BottomNav />
+    </>
   );
 }

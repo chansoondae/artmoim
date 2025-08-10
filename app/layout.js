@@ -1,6 +1,4 @@
-// app/layout.js
 import { Users } from 'lucide-react';
-import BottomNav from './components/BottomNav';
 import './globals.css'; // Tailwind CSS
 
 export const metadata = {
@@ -91,15 +89,15 @@ export default function RootLayout({ children }) {
       <body>
         <div className="min-h-screen bg-gray-50">
           {/* Header */}
-          <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+          <header className="bg-white border-b border-gray-200 sticky top-0 z-20">
             <div className="max-w-7xl mx-auto px-4 py-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                   <div className="w-8 h-8 bg-red-400 rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-sm">AF</span>
                   </div>
                   <h1 className="text-xl font-bold text-red-400">아트프렌즈</h1>
-                </div>
+                </a>
                 <div className="flex items-center gap-4">
                   <button className="text-gray-600 hover:text-gray-900 transition-colors">
                     <Users className="w-6 h-6" />
@@ -110,12 +108,9 @@ export default function RootLayout({ children }) {
           </header>
 
           {/* Main Content */}
-          <main className="pb-20">
+          <main>
             {children}
           </main>
-
-          {/* Bottom Navigation */}
-          <BottomNav />
         </div>
       </body>
     </html>

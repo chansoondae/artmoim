@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Heart, MapPin, Calendar, Filter, Search } from 'lucide-react';
 import { galleryData, toggleExhibitionLike } from '../../lib/gallery';
+import BottomNav from './../components/BottomNav';
 
 const GalleryPage = () => {
   const [exhibitions, setExhibitions] = useState(galleryData);
@@ -138,89 +139,93 @@ const GalleryPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* 헤더 */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">갤러리</h1>
-        <p className="text-gray-600">다양한 전시와 문화 행사를 둘러보세요</p>
-      </div>
-
-      {/* 검색 및 필터 */}
-      <div className="mb-6 space-y-4">
-        {/* 검색바 */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            placeholder="전시명, 갤러리명, 지역을 검색해보세요"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent"
-          />
+    <>
+      <div className="max-w-7xl mx-auto px-4 py-6 pb-24">
+        {/* 헤더 */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">갤러리</h1>
+          <p className="text-gray-600">다양한 전시와 문화 행사를 둘러보세요</p>
         </div>
 
-        {/* 카테고리 필터 */}
-        {/* <div className="flex gap-2 overflow-x-auto pb-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                selectedCategory === category
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div> */}
-
-        {/* 지역 필터 */}
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          {locations.map((location) => (
-            <button
-              key={location}
-              onClick={() => setSelectedLocation(location)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                selectedLocation === location
-                  ? 'bg-red-400 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {location}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 전시 목록 */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {filteredExhibitions.map((exhibition) => (
-          <ExhibitionCard key={exhibition.id} exhibition={exhibition} />
-        ))}
-      </div>
-
-      {/* 검색 결과 없음 */}
-      {filteredExhibitions.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-2">
-            <Search className="w-12 h-12 mx-auto" />
+        {/* 검색 및 필터 */}
+        <div className="mb-6 space-y-4">
+          {/* 검색바 */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="전시명, 갤러리명, 지역을 검색해보세요"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent"
+            />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">검색 결과가 없어요</h3>
-          <p className="text-gray-500">다른 키워드로 검색해보시거나 필터를 변경해보세요</p>
-        </div>
-      )}
 
-      {/* 더 보기 버튼 */}
-      {filteredExhibitions.length > 0 && (
-        <div className="mt-12 text-center">
-          <button className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-red-500 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
-            더 많은 전시 보기
-          </button>
+          {/* 카테고리 필터 */}
+          {/* <div className="flex gap-2 overflow-x-auto pb-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-purple-500 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div> */}
+
+          {/* 지역 필터 */}
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {locations.map((location) => (
+              <button
+                key={location}
+                onClick={() => setSelectedLocation(location)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                  selectedLocation === location
+                    ? 'bg-red-400 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {location}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* 전시 목록 */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredExhibitions.map((exhibition) => (
+            <ExhibitionCard key={exhibition.id} exhibition={exhibition} />
+          ))}
+        </div>
+
+        {/* 검색 결과 없음 */}
+        {filteredExhibitions.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-2">
+              <Search className="w-12 h-12 mx-auto" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">검색 결과가 없어요</h3>
+            <p className="text-gray-500">다른 키워드로 검색해보시거나 필터를 변경해보세요</p>
+          </div>
+        )}
+
+        {/* 더 보기 버튼 */}
+        {filteredExhibitions.length > 0 && (
+          <div className="mt-12 text-center">
+            <button className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-red-500 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
+              더 많은 전시 보기
+            </button>
+          </div>
+        )}
+      </div>
+      {/* Footer로 BottomNav 추가 */}
+      <BottomNav />
+    </>
   );
 };
 

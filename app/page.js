@@ -4,18 +4,31 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Heart, Users, Calendar, MapPin, Bus } from 'lucide-react';
 import { meetupsData } from '../lib/meetups';
+import BottomNav from './components/BottomNav';
 
 const ArtFriendsApp = () => {
+  const router = useRouter();
+
   const MeetupCard = ({ meetup }) => {
-    const handleLikeToggle = () => {
+    const handleLikeToggle = (e) => {
+      // 이벤트 버블링 방지
+      e.stopPropagation();
       // 실제 앱에서는 API 호출이나 상태 관리 라이브러리 사용
       console.log(`Toggling like for meetup ${meetup.id}`);
     };
 
+    const handleCardClick = () => {
+      router.push('/meetups');
+    };
+
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <div 
+        className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200 cursor-pointer"
+        onClick={handleCardClick}
+      >
         {/* Header with badge and heart */}
         <div className="relative p-4 pb-2">
           <div className="flex justify-between items-start mb-3">
@@ -96,7 +109,8 @@ const ArtFriendsApp = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <>
+    <div className="max-w-7xl mx-auto px-4 py-6 pb-24">
       {/* Title Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -116,11 +130,14 @@ const ArtFriendsApp = () => {
 
       {/* Load More Button */}
       <div className="mt-12 text-center">
-        <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
+        <button className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
           더 많은 모임 보기
         </button>
       </div>
     </div>
+        {/* Footer로 BottomNav 추가 */}
+        <BottomNav />
+    </>
   );
 };
 

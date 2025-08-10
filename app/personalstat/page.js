@@ -5,6 +5,7 @@ import { collection, getDocs, query, orderBy, doc, getDoc } from 'firebase/fires
 import { db } from '../../lib/firebase';
 import Link from 'next/link';
 import { exhibitionTypes } from './../../lib/exhibitionTypes';
+import BottomNav from './../components/BottomNav';
 
 export default function PersonalityStatPage() {
   const [results, setResults] = useState([]);
@@ -88,99 +89,103 @@ export default function PersonalityStatPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center text-fuchsia-900 mb-8">테스트 통계</h1>
-      
-      <div className="mb-8 text-center">
-        <div className="bg-purple-100 p-4 rounded-lg inline-block">
-          <h2 className="text-2xl font-semibold text-purple-800">총 참여자</h2>
-          <p className="text-3xl font-bold text-fuchsia-700">{totalParticipants}명</p>
+    <>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center text-fuchsia-900 mb-8">테스트 통계</h1>
+        
+        <div className="mb-8 text-center">
+          <div className="bg-purple-100 p-4 rounded-lg inline-block">
+            <h2 className="text-2xl font-semibold text-purple-800">총 참여자</h2>
+            <p className="text-3xl font-bold text-fuchsia-700">{totalParticipants}명</p>
+          </div>
         </div>
-      </div>
-      
-      {/* Personality Type Statistics */}
-      <div className="mb-12 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-fuchsia-800 mb-4">성격 유형별 분포</h2>
         
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-purple-100">
-                <th className="border px-4 py-2 text-left">성격 유형</th>
-                <th className="border px-4 py-2 text-left">이름</th>
-                <th className="border px-4 py-2 text-center">인원</th>
-                <th className="border px-4 py-2 text-center">비율</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedPersonalityTypes.map(([type, count]) => (
-                <tr key={type} className="hover:bg-purple-50">
-                  <td className="border px-4 py-2 font-semibold">
-                    <Link href={`/personality-types/${type}`} className="text-fuchsia-700 hover:underline">
-                      {type}
-                    </Link>
-                  </td>
-                  <td className="border px-4 py-2">
-                    {personalityTypes[type]?.name || '알 수 없는 유형'}
-                  </td>
-                  <td className="border px-4 py-2 text-center">{count}명</td>
-                  <td className="border px-4 py-2 text-center">
-                    {totalParticipants > 0 ? ((count / totalParticipants) * 100).toFixed(1) : 0}%
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-      {/* 개인별 상세 결과 섹션 */}
-      <div className="mb-12 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-fuchsia-800 mb-4">개인별 결과 목록</h2>
-      
-        {loading && <p className="text-gray-600">데이터를 불러오는 중...</p>}
-        {error && <p className="text-red-500">{error}</p>}
-        
-        {!loading && results.length === 0 && (
-          <p className="text-gray-600">아직 결과 데이터가 없습니다.</p>
-        )}
-        
-        {!loading && results.length > 0 && (
+        {/* Personality Type Statistics */}
+        <div className="mb-12 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-fuchsia-800 mb-4">성격 유형별 분포</h2>
+          
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200">
-              <thead className="bg-purple-100">
-                <tr>
-                  <th className="py-2 px-4 border-b text-left">번호</th>
-                  <th className="py-2 px-4 border-b text-left">닉네임</th>
-                  <th className="py-2 px-4 border-b text-left">성격 유형</th>
-                  <th className="py-2 px-4 border-b text-left">제출 시간</th>
-                  <th className="py-2 px-4 border-b text-left">답변</th>
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-purple-100">
+                  <th className="border px-4 py-2 text-left">성격 유형</th>
+                  <th className="border px-4 py-2 text-left">이름</th>
+                  <th className="border px-4 py-2 text-center">인원</th>
+                  <th className="border px-4 py-2 text-center">비율</th>
                 </tr>
               </thead>
               <tbody>
-                {results.map((result, index) => (
-                  <tr key={result.id} className={index % 2 === 0 ? 'bg-purple-50' : 'bg-white'}>
-                    <td className="py-2 px-4 border-b">{index + 1}</td>
-                    <td className="py-2 px-4 border-b">{result.nickname || '익명'}</td>
-                    <td className="py-2 px-4 border-b font-medium text-fuchsia-700">{result.personalityType || '알 수 없음'}</td>
-                    <td className="py-2 px-4 border-b">{formatDate(result.timestamp)}</td>
-                    <td className="py-2 px-4 border-b">
-                      <details>
-                        <summary className="cursor-pointer text-blue-600 hover:text-blue-800">
-                          답변 보기
-                        </summary>
-                        <div className="mt-2 p-2 bg-purple-50 rounded">
-                          {formatResponses(result.selectedArtworks)}
-                        </div>
-                      </details>
+                {sortedPersonalityTypes.map(([type, count]) => (
+                  <tr key={type} className="hover:bg-purple-50">
+                    <td className="border px-4 py-2 font-semibold">
+                      <Link href={`/personality-types/${type}`} className="text-fuchsia-700 hover:underline">
+                        {type}
+                      </Link>
+                    </td>
+                    <td className="border px-4 py-2">
+                      {personalityTypes[type]?.name || '알 수 없는 유형'}
+                    </td>
+                    <td className="border px-4 py-2 text-center">{count}명</td>
+                    <td className="border px-4 py-2 text-center">
+                      {totalParticipants > 0 ? ((count / totalParticipants) * 100).toFixed(1) : 0}%
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        )}
+        </div>
+        
+        {/* 개인별 상세 결과 섹션 */}
+        <div className="mb-12 bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-fuchsia-800 mb-4">개인별 결과 목록</h2>
+        
+          {loading && <p className="text-gray-600">데이터를 불러오는 중...</p>}
+          {error && <p className="text-red-500">{error}</p>}
+          
+          {!loading && results.length === 0 && (
+            <p className="text-gray-600">아직 결과 데이터가 없습니다.</p>
+          )}
+          
+          {!loading && results.length > 0 && (
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead className="bg-purple-100">
+                  <tr>
+                    <th className="py-2 px-4 border-b text-left">번호</th>
+                    <th className="py-2 px-4 border-b text-left">닉네임</th>
+                    <th className="py-2 px-4 border-b text-left">성격 유형</th>
+                    <th className="py-2 px-4 border-b text-left">제출 시간</th>
+                    <th className="py-2 px-4 border-b text-left">답변</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((result, index) => (
+                    <tr key={result.id} className={index % 2 === 0 ? 'bg-purple-50' : 'bg-white'}>
+                      <td className="py-2 px-4 border-b">{index + 1}</td>
+                      <td className="py-2 px-4 border-b">{result.nickname || '익명'}</td>
+                      <td className="py-2 px-4 border-b font-medium text-fuchsia-700">{result.personalityType || '알 수 없음'}</td>
+                      <td className="py-2 px-4 border-b">{formatDate(result.timestamp)}</td>
+                      <td className="py-2 px-4 border-b">
+                        <details>
+                          <summary className="cursor-pointer text-blue-600 hover:text-blue-800">
+                            답변 보기
+                          </summary>
+                          <div className="mt-2 p-2 bg-purple-50 rounded">
+                            {formatResponses(result.selectedArtworks)}
+                          </div>
+                        </details>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      {/* Footer로 BottomNav 추가 */}
+      <BottomNav />
+    </>
   );
 }

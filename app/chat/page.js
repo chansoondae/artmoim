@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { MessageCircle, Users, User, Search, MoreVertical } from 'lucide-react';
 import { personalChats, groupChats, getUnreadCount } from '../../lib/chat';
+import BottomNav from './../components/BottomNav';
 
 const ChatPage = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -151,7 +152,8 @@ const ChatPage = () => {
   const filteredChats = getFilteredChats();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <>
+    <div className="max-w-7xl mx-auto px-4 py-6 pb-20">
       {/* 헤더 */}
       {/* <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">채팅</h1>
@@ -232,6 +234,9 @@ const ChatPage = () => {
         </button>
       </div>
     </div>
+    {/* Footer로 BottomNav 추가 */}
+    <BottomNav />
+    </>
   );
 };
 
