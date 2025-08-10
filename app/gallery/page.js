@@ -222,9 +222,9 @@ const GalleryPage = () => {
           </div>
 
           {/* 설명 */}
-          <p className="text-xs lg:text-sm text-gray-600 mb-3 line-clamp-2">
+          {/* <p className="text-xs lg:text-sm text-gray-600 mb-3 line-clamp-2">
             {exhibition.description}
-          </p>
+          </p> */}
 
           {/* 리뷰 미리보기 */}
           <ReviewPreview reviews={reviews} />
