@@ -104,6 +104,11 @@ const MyPageClient = () => {
     setIsDetailExpanded(prev => !prev);
   }, []);
 
+  // 성격 테스트 페이지로 이동
+  const handlePersonalityTest = useCallback(() => {
+    router.push('/personality');
+  }, [router]);
+
   // 외부 클릭 시 드롭다운 닫기
   const handleOutsideClick = useCallback(() => {
     setIsTypeDropdownOpen(false);
@@ -477,6 +482,30 @@ const MyPageClient = () => {
               </div>
             </div>
           </div>
+
+          {/* 비공개 상태일 때 중앙에 표시되는 버튼 */}
+          {!isExhibitionTypeVisible && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+              <div className="pointer-events-auto">
+                <button
+                  onClick={handlePersonalityTest}
+                  className="group flex flex-col items-center gap-4 px-8 py-6 bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                >
+                  <div className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-300">
+                    <Sparkles className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-bold text-gray-900 text-lg mb-2">관람스타일 테스트</h3>
+                    <p className="text-gray-600 text-sm">나만의 전시 관람 성향을 알아보세요</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-purple-600 font-medium text-sm group-hover:text-purple-700 transition-colors">
+                    <span>테스트 시작하기</span>
+                    <ChevronDown className="w-4 h-4 -rotate-90" />
+                  </div>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       
