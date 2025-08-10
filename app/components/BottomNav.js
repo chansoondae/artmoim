@@ -29,8 +29,8 @@ const BottomNav = () => {
     //   isCenter: true,
     // },
     {
-      id: 'personality',
-      path: '/personality',
+      id: 'create',
+      path: '/create',
       icon: Plus,
       label: null, // 가운데 버튼은 라벨 없음
       isCenter: true,

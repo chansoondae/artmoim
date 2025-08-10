@@ -1,12 +1,10 @@
 // app/gallery/page.js 
-
-
 'use client';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Heart, MapPin, Calendar, Filter, Search } from 'lucide-react';
-import { galleryData, toggleExhibitionLike } from '../../lib/gallery';
+import { Heart, MapPin, Calendar, Filter, Search, Star, Bookmark, MessageCircle } from 'lucide-react';
+import { galleryData, toggleExhibitionLike, toggleSave, getExhibitionReviews } from '../../lib/gallery';
 import BottomNav from './../components/BottomNav';
 
 const GalleryPage = () => {
@@ -36,7 +34,12 @@ const GalleryPage = () => {
 
   const handleLikeToggle = (id) => {
     toggleExhibitionLike(id);
-    setExhibitions([...galleryData]); // 상태 업데이트를 위한 새 배열
+    setExhibitions([...galleryData]);
+  };
+
+  const handleSaveToggle = (id) => {
+    toggleSave(id);
+    setExhibitions([...galleryData]);
   };
 
   const filteredExhibitions = exhibitions.filter(exhibition => {
@@ -48,8 +51,69 @@ const GalleryPage = () => {
     return matchesSearch && matchesLocation && matchesCategory;
   });
 
+  const StarRating = ({ rating, size = 'w-4 h-4' }) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            className={`${size} ${
+              star <= Math.round(rating) 
+                ? 'text-yellow-400 fill-yellow-400' 
+                : 'text-gray-300 fill-gray-300'
+            }`}
+          />
+        ))}
+        <span className="text-sm font-medium text-gray-700 ml-1">{rating}</span>
+      </div>
+    );
+  };
+
+  const ReviewPreview = ({ reviews }) => {
+    if (!reviews || reviews.length === 0) return null;
+    
+    const displayReviews = reviews.slice(0, 3);
+    
+    return (
+      <div className="mt-3 space-y-2">
+        {displayReviews.map((review) => (
+          <div key={review.id} className="flex items-start gap-2">
+            <img
+              src={review.profileImage}
+              alt={review.nickname}
+              className="w-6 h-6 rounded-full flex-shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-gray-800 truncate">
+                  {review.nickname}
+                </span>
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`w-3 h-3 ${
+                        star <= review.rating 
+                          ? 'text-yellow-400 fill-yellow-400' 
+                          : 'text-gray-300 fill-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs text-gray-600 line-clamp-1">
+                {review.comment}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const ExhibitionCard = ({ exhibition }) => {
     const [imageError, setImageError] = useState(false);
+    const reviews = getExhibitionReviews(exhibition.id);
 
     return (
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200">
@@ -77,23 +141,36 @@ const GalleryPage = () => {
             </div>
           )}
           
-          {/* 좋아요 버튼 */}
-          <button
-            onClick={() => handleLikeToggle(exhibition.id)}
-            className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
-          >
-            <Heart
-              className={`w-4 h-4 transition-colors ${
-                exhibition.isLiked ? 'text-red-500 fill-red-500' : 'text-gray-600'
-              }`}
-            />
-          </button>
-          
-          {/* 카테고리 뱃지 */}
-          <div className="absolute top-3 left-3">
+          {/* 상단 버튼들 */}
+          <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+            {/* 카테고리 뱃지 */}
             <span className={`text-white text-xs px-2 py-1 rounded-full ${categoryColors[exhibition.category] || 'bg-black/70'}`}>
               {exhibition.category}
             </span>
+            
+            {/* 좋아요 & 저장 버튼 */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleLikeToggle(exhibition.id)}
+                className="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+              >
+                <Heart
+                  className={`w-4 h-4 transition-colors ${
+                    exhibition.isLiked ? 'text-red-500 fill-red-500' : 'text-gray-600'
+                  }`}
+                />
+              </button>
+              <button
+                onClick={() => handleSaveToggle(exhibition.id)}
+                className="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
+              >
+                <Bookmark
+                  className={`w-4 h-4 transition-colors ${
+                    exhibition.isSaved ? 'text-blue-500 fill-blue-500' : 'text-gray-600'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
 
           {/* 지역 뱃지 */}
@@ -123,16 +200,34 @@ const GalleryPage = () => {
             </div>
           </div>
 
+          {/* 평점 */}
+          <div className="mb-3">
+            <StarRating rating={exhibition.rating} size="w-3 h-3 lg:w-4 lg:h-4" />
+          </div>
+
+          {/* 통계 정보 */}
+          <div className="flex items-center gap-4 text-xs lg:text-sm text-gray-500 mb-3">
+            <div className="flex items-center gap-1">
+              <Heart className="w-3 h-3 lg:w-4 lg:h-4" />
+              <span>{exhibition.likes}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MessageCircle className="w-3 h-3 lg:w-4 lg:h-4" />
+              <span>{exhibition.reviewCount}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Bookmark className="w-3 h-3 lg:w-4 lg:h-4" />
+              <span>{exhibition.savedCount}</span>
+            </div>
+          </div>
+
           {/* 설명 */}
           <p className="text-xs lg:text-sm text-gray-600 mb-3 line-clamp-2">
             {exhibition.description}
           </p>
 
-          {/* 좋아요 수 */}
-          <div className="flex items-center gap-1 text-xs lg:text-sm text-gray-500">
-            <Heart className="w-3 h-3 lg:w-4 lg:h-4" />
-            <span>{exhibition.likes}</span>
-          </div>
+          {/* 리뷰 미리보기 */}
+          <ReviewPreview reviews={reviews} />
         </div>
       </div>
     );
@@ -142,10 +237,10 @@ const GalleryPage = () => {
     <>
       <div className="max-w-7xl mx-auto px-4 py-6 pb-24">
         {/* 헤더 */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">갤러리</h1>
           <p className="text-gray-600">다양한 전시와 문화 행사를 둘러보세요</p>
-        </div>
+        </div> */}
 
         {/* 검색 및 필터 */}
         <div className="mb-6 space-y-4">
@@ -162,7 +257,7 @@ const GalleryPage = () => {
           </div>
 
           {/* 카테고리 필터 */}
-          {/* <div className="flex gap-2 overflow-x-auto pb-2">
+          <div className="flex gap-2 overflow-x-auto pb-2">
             {categories.map((category) => (
               <button
                 key={category}
@@ -176,7 +271,7 @@ const GalleryPage = () => {
                 {category}
               </button>
             ))}
-          </div> */}
+          </div>
 
           {/* 지역 필터 */}
           <div className="flex gap-2 overflow-x-auto pb-2">
@@ -223,6 +318,7 @@ const GalleryPage = () => {
           </div>
         )}
       </div>
+      
       {/* Footer로 BottomNav 추가 */}
       <BottomNav />
     </>
