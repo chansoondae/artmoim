@@ -221,6 +221,94 @@ const MyPageClient = () => {
           </div>
         ))}
       </div>
+
+      {/* 뱃지 섹션 */}
+      <div className="pt-4">
+        {/* <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 bg-yellow-100 rounded-2xl">
+            <Award className="w-8 h-8 text-yellow-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900">뱃지</h2>
+        </div> */}
+        
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-4">
+          {[
+            { 
+              id: 'samcheong', 
+              name: '삼청동', 
+              achieved: true, 
+              icon: '🏛️',
+              description: '삼청동 갤러리 탐방가'
+            },
+            { 
+              id: 'hannam', 
+              name: '한남동', 
+              achieved: true, 
+              icon: '🎨',
+              description: '한남동 아트 러버'
+            },
+            { 
+              id: 'cheongdam', 
+              name: '청담동', 
+              achieved: false, 
+              icon: '✨',
+              description: '청담동 갤러리 마스터'
+            },
+            { 
+              id: 'punctual', 
+              name: '약속왕', 
+              achieved: true, 
+              icon: '⏰',
+              description: '시간 약속의 달인'
+            },
+            { 
+              id: 'reviewer', 
+              name: '후기왕', 
+              achieved: false, 
+              icon: '📝',
+              description: '리뷰 작성의 고수'
+            },
+            { 
+              id: 'introducer', 
+              name: '소개왕', 
+              achieved: false, 
+              icon: '👥',
+              description: '친구 소개 전문가'
+            }
+          ].map((badge) => (
+            <div 
+              key={badge.id} 
+              className={`text-center p-4 rounded-2xl border transition-all duration-200 hover:scale-105 ${
+                badge.achieved 
+                  ? 'bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200 shadow-sm' 
+                  : 'bg-gray-50 border-gray-200'
+              }`}
+            >
+              <div className={`text-3xl mb-2 transition-all duration-200 ${
+                badge.achieved ? 'filter-none' : 'filter grayscale opacity-30'
+              }`}>
+                {badge.icon}
+              </div>
+              <div className={`text-sm font-bold mb-1 ${
+                badge.achieved ? 'text-yellow-600' : 'text-gray-400'
+              }`}>
+                {badge.name}
+              </div>
+              <div className={`text-xs leading-tight ${
+                badge.achieved ? 'text-gray-600' : 'text-gray-400'
+              }`}>
+                {badge.description}
+              </div>
+              {badge.achieved && (
+                <div className="mt-2">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full mx-auto"></div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   ));
 

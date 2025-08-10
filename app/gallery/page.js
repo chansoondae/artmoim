@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Heart, MapPin, Calendar, Filter, Search, Star, Bookmark, MessageCircle } from 'lucide-react';
+import { Heart, MapPin, Calendar, Filter, Search, Star, Bookmark, MessageCircle, Headphones, Play } from 'lucide-react';
 import { galleryData, toggleExhibitionLike, toggleSave, getExhibitionReviews } from '../../lib/gallery';
 import BottomNav from './../components/BottomNav';
 
@@ -40,6 +40,14 @@ const GalleryPage = () => {
   const handleSaveToggle = (id) => {
     toggleSave(id);
     setExhibitions([...galleryData]);
+  };
+
+  const handleAudioGuideClick = (url) => {
+    window.open(url, '_blank');
+  };
+
+  const handleYouTubeClick = (url) => {
+    window.open(url, '_blank');
   };
 
   const filteredExhibitions = exhibitions.filter(exhibition => {
@@ -173,8 +181,31 @@ const GalleryPage = () => {
             </div>
           </div>
 
-          {/* 지역 뱃지 */}
-          <div className="absolute bottom-3 right-3">
+          {/* 하단 정보 */}
+          <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+            {/* 오디오 가이드 & 유튜브 버튼 */}
+            <div className="flex gap-2">
+              {exhibition.audioGuide && (
+                <button
+                  onClick={() => handleAudioGuideClick(exhibition.audioGuide)}
+                  className="w-8 h-8 bg-pink-500 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors group"
+                  title="오디오 가이드"
+                >
+                  <Headphones className="w-4 h-4 text-gray-200 group-hover:text-blue-600 transition-colors" />
+                </button>
+              )}
+              {exhibition.youTube && (
+                <button
+                  onClick={() => handleYouTubeClick(exhibition.youTube)}
+                  className="w-8 h-8 bg-yellow-400 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors group"
+                  title="유튜브 영상"
+                >
+                  <Play className="w-4 h-4 text-red-700 group-hover:text-red-600 transition-colors" />
+                </button>
+              )}
+            </div>
+
+            {/* 지역 뱃지 */}
             <span className={`text-xs px-2 py-1 rounded-full border ${locationColors[exhibition.location] || 'bg-gray-100 text-gray-700 border-gray-200'}`}>
               {exhibition.location}
             </span>

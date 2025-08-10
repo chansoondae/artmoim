@@ -108,6 +108,12 @@ const nextConfig = {
             hostname: 'www.myartmuseum.co.kr',
             port: '',
             pathname: '/**',
+            },
+            {
+            protocol: 'http',
+            hostname: 'www.sac.or.kr',
+            port: '',
+            pathname: '/**',
             }
       ],
     },
