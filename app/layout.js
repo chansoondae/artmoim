@@ -95,10 +95,10 @@ export default function RootLayout({ children }) {
             <div className="max-w-7xl mx-auto px-4 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">A</span>
+                  <div className="w-8 h-8 bg-red-400 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">AF</span>
                   </div>
-                  <h1 className="text-xl font-bold text-gray-900">아트프렌즈</h1>
+                  <h1 className="text-xl font-bold text-red-400">아트프렌즈</h1>
                 </div>
                 <div className="flex items-center gap-4">
                   <button className="text-gray-600 hover:text-gray-900 transition-colors">

@@ -66,7 +66,7 @@ const BottomNav = () => {
                 <button
                   key={id}
                   onClick={() => handleNavigation(path)}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all duration-200 -mt-6"
+                  className="bg-red-400 hover:bg-pink-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all duration-200 -mt-6"
                 >
                   <Icon className="w-7 h-7" />
                 </button>
@@ -79,7 +79,7 @@ const BottomNav = () => {
                 key={id}
                 onClick={() => handleNavigation(path)}
                 className={`flex flex-col items-center gap-1 py-2 px-3 transition-colors hover:bg-gray-50 rounded-lg min-w-0 ${
-                  isActive ? 'text-purple-500' : 'text-gray-400'
+                  isActive ? 'text-red-400' : 'text-gray-400'
                 }`}
               >
                 <Icon className="w-5 h-5" />

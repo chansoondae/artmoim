@@ -155,7 +155,7 @@ const GalleryPage = () => {
             placeholder="전시명, 갤러리명, 지역을 검색해보세요"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent"
           />
         </div>
 
@@ -184,7 +184,7 @@ const GalleryPage = () => {
               onClick={() => setSelectedLocation(location)}
               className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                 selectedLocation === location
-                  ? 'bg-purple-500 text-white'
+                  ? 'bg-red-400 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -215,7 +215,7 @@ const GalleryPage = () => {
       {/* 더 보기 버튼 */}
       {filteredExhibitions.length > 0 && (
         <div className="mt-12 text-center">
-          <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
+          <button className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-red-500 hover:to-pink-600 transition-all duration-200 transform hover:scale-105">
             더 많은 전시 보기
           </button>
         </div>

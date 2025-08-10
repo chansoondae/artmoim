@@ -102,6 +102,12 @@ const nextConfig = {
             hostname: 'www.mmca.go.kr',
             port: '',
             pathname: '/**',
+            },
+            {
+            protocol: 'http',
+            hostname: 'www.myartmuseum.co.kr',
+            port: '',
+            pathname: '/**',
             }
       ],
     },

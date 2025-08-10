@@ -117,7 +117,7 @@ const MyPageClient = () => {
       <div className="flex items-start gap-6 mb-2">
         {/* 프로필 이미지 */}
         <div className="relative flex-shrink-0">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full overflow-hidden ring-3 ring-white shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-red-400 to-pink-400 rounded-full overflow-hidden ring-3 ring-white shadow-lg">
             {!isImageError('profile') ? (
               <Image
                 src={currentProfile.profileImage}
@@ -129,12 +129,12 @@ const MyPageClient = () => {
                 priority
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-400 to-pink-400">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-red-400 to-pink-400">
                 <User className="w-10 h-10 text-white" />
               </div>
             )}
           </div>
-          <button className="absolute -bottom-1 -right-1 w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center hover:bg-purple-600 transition-all duration-200 shadow-md">
+          <button className="absolute -bottom-1 -right-1 w-6 h-6 bg-red-400 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-all duration-200 shadow-md">
             <Edit3 className="w-3 h-3" />
           </button>
         </div>
@@ -160,7 +160,7 @@ const MyPageClient = () => {
               <Share className="w-3 h-3" />
               <span>공유</span>
             </button>
-            <button className="flex items-center gap-1 px-3 py-1.5 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all duration-200 shadow-sm text-xs font-medium">
+            <button className="flex items-center gap-1 px-3 py-1.5 bg-red-400 text-white rounded-lg hover:bg-red-500 transition-all duration-200 shadow-sm text-xs font-medium">
               <Settings className="w-3 h-3" />
               <span>설정</span>
             </button>
@@ -199,8 +199,8 @@ const MyPageClient = () => {
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-2 relative z-2">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-purple-100 rounded-2xl">
-              <Eye className="w-8 h-8 text-purple-500" />
+            <div className="p-3 bg-red-100 rounded-2xl">
+              <Eye className="w-8 h-8 text-red-500" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900">관람스타일</h2>
           </div>
@@ -212,8 +212,8 @@ const MyPageClient = () => {
             </span> */}
             <button
               onClick={toggleExhibitionTypeVisibility}
-              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
-                isExhibitionTypeVisible ? 'bg-purple-600' : 'bg-gray-300'
+              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2 ${
+                isExhibitionTypeVisible ? 'bg-red-400' : 'bg-gray-300'
               }`}
             >
               <span
@@ -234,7 +234,7 @@ const MyPageClient = () => {
             <div className="flex flex-col lg:flex-row gap-8 mb-8">
               {/* MBTI 이미지 - 세로형으로 조정 */}
               <div className="flex-shrink-0 lg:flex-shrink-0">
-                <div className="w-48 h-72 lg:w-56 lg:h-80 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-purple-100 to-pink-100 mx-auto lg:mx-0 p-2">
+              <div className={`w-48 h-72 lg:w-56 lg:h-80 rounded-3xl overflow-hidden shadow-xl ${exhibitionTypeInfo.color.split(' ')[0]} mx-auto lg:mx-0 p-2`}>
                   <Image
                     src={exhibitionTypeInfo.image}
                     alt={exhibitionTypeInfo.name}
@@ -271,7 +271,7 @@ const MyPageClient = () => {
                                 key={type}
                                 onClick={() => handleTypeChange(type)}
                                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm hover:bg-gray-50 transition-colors ${
-                                  isSelected ? 'bg-purple-50' : ''
+                                  isSelected ? 'bg-red-50' : ''
                                 }`}
                               >
                                 <div className="flex items-center gap-3">
@@ -280,7 +280,7 @@ const MyPageClient = () => {
                                   </span>
                                 </div>
                                 {isSelected && (
-                                  <Check className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                                  <Check className="w-4 h-4 text-red-400 flex-shrink-0" />
                                 )}
                               </button>
                             );
@@ -305,7 +305,7 @@ const MyPageClient = () => {
                   <h4 className="font-bold text-gray-900 mb-3 text-lg">추천 장르</h4>
                   <div className="flex flex-wrap gap-3">
                     {exhibitionTypeInfo.recommendedGenres.map((genre, index) => (
-                      <span key={index} className="px-4 py-2 bg-purple-100 text-purple-700 rounded-xl text-sm font-medium hover:bg-purple-200 transition-colors">
+                      <span key={index} className={`px-4 py-2 rounded-xl text-sm font-medium hover:opacity-80 transition-all duration-200 ${exhibitionTypeInfo.color}`}>
                         {genre}
                       </span>
                     ))}
@@ -395,16 +395,16 @@ const MyPageClient = () => {
       </div>
       
       {/* 매너온도 */}
-      <div className="bg-white rounded-3xl shadow-lg border border-gray-100/50 p-8">
+      <div className="p-8">
         <div className="flex items-center gap-4 mb-6">
           <div className="p-3 bg-red-100 rounded-2xl">
-            <Thermometer className="w-8 h-8 text-red-500" />
+            <Thermometer className="w-8 h-8 text-red-400" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">매너온도</h2>
         </div>
         
         <div className="flex items-center gap-6 mb-8">
-          <div className="text-4xl font-bold text-red-500">{currentProfile.mannerTemperature}°C</div>
+          <div className="text-4xl font-bold text-red-400">{currentProfile.mannerTemperature}°C</div>
           <div className={`text-xl font-bold ${mannerGrade.color} px-4 py-2 bg-gray-50 rounded-xl`}>
             {mannerGrade.grade}
           </div>
@@ -512,7 +512,7 @@ const MyPageClient = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900">최근 참여 모임</h3>
             </div>
-            <button className="text-purple-500 text-sm font-medium hover:underline">더보기</button>
+            <button className="text-red-400 text-sm font-medium hover:underline">더보기</button>
           </div>
           
           <div className="space-y-4">
@@ -560,7 +560,7 @@ const MyPageClient = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900">최근 관람 인증</h3>
             </div>
-            <button className="text-purple-500 text-sm font-medium hover:underline">더보기</button>
+            <button className="text-red-400 text-sm font-medium hover:underline">더보기</button>
           </div>
           
           <div className="grid grid-cols-3 gap-3">
