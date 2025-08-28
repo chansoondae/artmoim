@@ -282,6 +282,39 @@ const CreateMeetupPage = () => {
         </div>
       </div>
 
+            {/* 최대 참여자 수 */}
+            <div>
+        <label className="block text-sm font-medium text-gray-700 mb-3">
+          <Users className="w-4 h-4 inline mr-1" />
+          최대 참여자 수
+        </label>
+        
+        {formData.transportType === 'bus' ? (
+          // 아트버스인 경우 28명 고정 표시
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+            <div className="text-red-700 font-semibold text-lg">28명</div>
+            <div className="text-red-600 text-sm">아트버스 고정 인원</div>
+          </div>
+        ) : (
+          // 일반 모임인 경우 버튼 선택
+          <div className="grid grid-cols-4 gap-2">
+            {regularMeetupOptions.map(num => (
+              <button
+                key={num}
+                onClick={() => handleInputChange('maxParticipants', num)}
+                className={`p-3 rounded-xl text-center transition-colors ${
+                  formData.maxParticipants === num
+                    ? 'bg-red-400 text-white'
+                    : 'bg-gray-50 text-gray-700 hover:bg-red-50 hover:text-red-600 border border-gray-200'
+                }`}
+              >
+                <div className="font-medium text-sm">{num}명</div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* 지역 선택 */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -342,7 +375,7 @@ const CreateMeetupPage = () => {
       </div>
 
       {/* 모임 형태 */}
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium text-gray-700 mb-3">
           모임 형태
         </label>
@@ -372,40 +405,9 @@ const CreateMeetupPage = () => {
             <div className="text-xs text-gray-500">단체 이동</div>
           </button>
         </div>
-      </div>
+      </div> */}
 
-      {/* 최대 참여자 수 */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          <Users className="w-4 h-4 inline mr-1" />
-          최대 참여자 수
-        </label>
-        
-        {formData.transportType === 'bus' ? (
-          // 아트버스인 경우 28명 고정 표시
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-            <div className="text-red-700 font-semibold text-lg">28명</div>
-            <div className="text-red-600 text-sm">아트버스 고정 인원</div>
-          </div>
-        ) : (
-          // 일반 모임인 경우 버튼 선택
-          <div className="grid grid-cols-4 gap-2">
-            {regularMeetupOptions.map(num => (
-              <button
-                key={num}
-                onClick={() => handleInputChange('maxParticipants', num)}
-                className={`p-3 rounded-xl text-center transition-colors ${
-                  formData.maxParticipants === num
-                    ? 'bg-red-400 text-white'
-                    : 'bg-gray-50 text-gray-700 hover:bg-red-50 hover:text-red-600 border border-gray-200'
-                }`}
-              >
-                <div className="font-medium text-sm">{num}명</div>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+
     </div>
   );
 

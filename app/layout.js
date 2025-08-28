@@ -1,5 +1,6 @@
 import { Users } from 'lucide-react';
 import './globals.css'; // Tailwind CSS
+import Footer from './components/Footer';
 
 export const metadata = {
   title: {
@@ -111,6 +112,7 @@ export default function RootLayout({ children }) {
           <main>
             {children}
           </main>
+          <Footer />
         </div>
       </body>
     </html>
