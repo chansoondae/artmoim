@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
         <li>본 방침은 관련 법령 및 회사 정책에 따라 변경될 수 있습니다. 변경 시 사전 공지합니다.</li>
       </ul>
       <div style={{ marginTop: 40, color: '#888', fontSize: 14 }}>
-        시행일: 2024년 6월 1일
+        시행일: 2025년 6월 1일
       </div>
     </div>
   );
