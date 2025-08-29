@@ -19,6 +19,10 @@ const Footer = () => {
       <div>이메일: artfriendscafe@gmail.com</div>
       <div>전화: 070-7918-3582</div>
       <div>주소: 서울시 서초구 강남대로 373, 위워크 8층 104호</div>
+      <div style={{ marginTop: '12px' }}>
+        <a href="/privacy" style={{ color: '#8b5cf6', textDecoration: 'underline', marginRight: '16px' }}>개인정보 처리방침</a>
+        <a href="http://pf.kakao.com/_gIxlNb" target="_blank" rel="noopener noreferrer" style={{ color: '#3C1E1E', textDecoration: 'underline' }}>카카오톡 문의하기</a>
+      </div>
     </footer>
   );
 };
